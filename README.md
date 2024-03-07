@@ -1,5 +1,7 @@
 # Task List using React + TypeScript + Vite
 
+Source: Udemy's React Course 
+
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
