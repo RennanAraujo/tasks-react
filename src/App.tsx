@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function App() {
   const [input, setInput] = useState(""); //Funciona como um get/set da OOP
@@ -7,6 +7,15 @@ export default function App() {
     enabled: false,
     task: "",
   });
+
+  useEffect(() => {
+    //Para conservar os valores no local storage quando a página for recarregada ou navegador fechado
+    const tarefasSalvas = localStorage.getItem("@curso-react");
+
+    if (tarefasSalvas) {
+      setTasks(JSON.parse(tarefasSalvas));
+    }
+  }, []);
 
   function handleRegister() {
     if (!input) {
@@ -19,7 +28,8 @@ export default function App() {
     }
     setTasks((tarefas) => [...tarefas, input]); //Adiciona o input à lista já existente
     setInput("");
-    return alert(`O item ${input} será adicionado`);
+    localStorage.setItem("@curso-react", JSON.stringify([...tasks, input])); //Primeira vez que ele define
+    return alert(`O item ${input} será adicionado`); //Diretiva return deve ser a última
   }
 
   function handleSaveEdit() {
@@ -34,6 +44,7 @@ export default function App() {
       task: "",
     });
     setInput("");
+    localStorage.setItem("@curso-react", JSON.stringify(allTasks));
   }
 
   function handleDelete(item: string) {
